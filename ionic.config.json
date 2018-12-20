@@ -1,5 +1,7 @@
 {
   "name": "Vilsen",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

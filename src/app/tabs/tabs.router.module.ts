@@ -9,42 +9,42 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'places',
         children: [
           {
             path: '',
-            loadChildren: '../tab1/tab1.module#Tab1PageModule'
+            loadChildren: '../places/places.module#PlacesPageModule'
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'missions',
         children: [
           {
             path: '',
-            loadChildren: '../tab2/tab2.module#Tab2PageModule'
+            loadChildren: '../missions/missions.module#MissionsPageModule'
           }
         ]
       },
       {
-        path: 'tab3',
+        path: 'places',
         children: [
           {
-            path: '',
-            loadChildren: '../tab3/tab3.module#Tab3PageModule'
+            path: 'place-details/:name',
+            loadChildren: '../place-details/place-details.module#PlaceDetailsPageModule'
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: 'game-play/tabs/places',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: 'game-play/tabs/places',
     pathMatch: 'full'
   }
 ];
