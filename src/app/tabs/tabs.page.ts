@@ -12,8 +12,8 @@ import { Subscription } from 'rxjs';
 })
 export class TabsPage {
 
-  minutes = 0;
-  seconds = 10;
+  minutes = 8;
+  seconds = 0;
   zeroS: number = null;
   zeroM: number = null;
   subscription: Subscription;
