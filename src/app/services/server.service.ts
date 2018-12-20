@@ -13,6 +13,7 @@ export interface Player {
   role: string;
   correctLostGuess: boolean;
   correctUniqueGuess: boolean;
+  correctPlaceGuess: boolean;
   chosenPlace: Place;
 }
 
@@ -20,7 +21,6 @@ export interface Game {
   id: string;
   started: boolean;
   placeGroupNames: string[];
-  lostGuessed: boolean;
 }
 
 @Injectable({
@@ -35,9 +35,6 @@ export class ServerService {
   private players: Observable<Player[]>;
   private player: Observable<Player>;
   private game: Observable<Game>;
-
-  // private playerName = ''; // not in firebase
-  // private gameName: string; // not in firebase
 
   constructor(private fireDatabase: AngularFirestore) { }
 
@@ -80,15 +77,15 @@ export class ServerService {
     // create game document
     this.gameDoc = this.fireDatabase.doc<Game>('root/' + gameName);
     if (host) {
-      this.gameDoc.set({id : gameName, started : null, placeGroupNames : [], lostGuessed: null});
+      this.gameDoc.set({id : gameName, started : null, placeGroupNames : []});
     }
     this.game = this.gameDoc.valueChanges();
     // create players collection
     this.playersCollection = this.fireDatabase.collection<Player>('root/' + gameName + '/players');
     // create one player
     this.playerDoc = this.fireDatabase.doc<Player>('root/' + gameName + '/players/' + playerName);
-    this.playerDoc.set({name : playerName, ready : false, score : 0, host : host,
-      role : null, correctLostGuess : null, correctUniqueGuess : null, chosenPlace : null});
+    this.playerDoc.set({name : playerName, ready : false, score : 0, host : host, role : null,
+      correctLostGuess : null, correctUniqueGuess : null, chosenPlace : null, correctPlaceGuess : null});
     // listen to changes in players. Use playersCollection so the Player interface can be used
     this.players = this.playersCollection.valueChanges();
     this.player = this.playerDoc.valueChanges();
@@ -106,16 +103,16 @@ export class ServerService {
     this.playerDoc.update({correctUniqueGuess : correct});
   }
 
+  setCorrectPlaceGuess(correct: boolean) {
+    this.playerDoc.update({correctPlaceGuess : correct});
+  }
+
   setPlaceGroupNames(names: string[]) {
     this.gameDoc.update({placeGroupNames : names});
   }
 
   setGameStartedStatus(status: boolean) {
     this.gameDoc.update({started : status});
-  }
-
-  setLostGuessed(guessed: boolean) {
-    this.gameDoc.update({lostGuessed : guessed});
   }
 
   setPlayerRole(role: string) {

@@ -23,7 +23,6 @@ export class ScorePage {
     private localData: LocalDataService) { }
 
   ionViewWillEnter() {
-    console.log('willEnter score');
     let roleSaved = false;
     let roleSavedToServer = false;
     let placeSaved = false;
@@ -33,7 +32,6 @@ export class ScorePage {
     let playerNamesSaved = false;
     let readyToNavigate = false;
     this.subscription = this.server.getPlayers().subscribe(res => {
-      console.log('inside subscription score page');
       let allReady = true;
       this.players = res;
       this.players.forEach(player => {
@@ -65,7 +63,6 @@ export class ScorePage {
 
       // Save playerNames
       if (allReady) {
-        console.log('allReady');
         if (!playerNamesSaved) {
           playerNamesSaved = true;
           const playerNames: string[] = [];
@@ -78,12 +75,10 @@ export class ScorePage {
         // Randomize Place and Role
         if (this.localData.isHost()) {
           if (!placeSavedToServer) {
-            console.log('randomizePlace()');
             placeSavedToServer = true;
             this.randomizePlace();
           }
           if (!roleSavedToServer) {
-            console.log('randomizeRoles()');
             roleSavedToServer = true;
             this.server.setGameStartedStatus(true);
             this.randomizeRoles();
@@ -109,7 +104,6 @@ export class ScorePage {
   }
 
   ionViewWillLeave() {
-    console.log('willLeave() score page');
     this.subscription.unsubscribe();
   }
 

@@ -19,6 +19,7 @@ export class RoundFinishedPage implements OnInit {
 
   ngOnInit() {
     this.resetServerData();
+    this.addPoints();
 
     if (this.localData.getLostGuessed()) {
       if (this.localData.getPlayerRole() === 'lost') {
@@ -43,9 +44,43 @@ export class RoundFinishedPage implements OnInit {
     this.server.setCorrectUniqueGuess(null);
     this.server.setPlayerReadyStatus(false);
     this.server.setPlayerRole(null);
-    this.server.setPlayerScore(this.localData.getPoints());
-    this.server.setLostGuessed(null);
+    this.server.setCorrectPlaceGuess(null);
     this.server.setChosenPlaceWithNames(this.localData.getPlayerNames(), null);
+  }
+
+  addPoints() {
+    let points = 0;
+    if (this.localData.getPlayerRole() !== 'lost') {
+      if (this.localData.getLostGuess() === this.localData.getLostPlayer()) {
+        points += 3;
+        console.log('Found lost: 3p');
+      }
+    }
+    if (this.localData.getPlayerRole() === 'general') {
+      if (this.localData.getUniqueGuess() === this.localData.getUniquePlayer()) {
+        points += 1;
+        console.log('Found unique 1p');
+      }
+    }
+    if (this.localData.getPlayerRole() === 'unique') {
+      if (this.localData.getCorrectUniqueGuesses() > 0) {
+        points += 1;
+        console.log('I got found as unique: 1p');
+      }
+    }
+    if (this.localData.getPlayerRole() === 'lost') {
+      if (this.localData.getLostGuess() === this.localData.getChosenPlace().name) {
+        points += 3;
+        console.log('Found place: 3p');
+      }
+      if (!this.localData.getLostPlayerFound()) {
+        points += 1;
+        console.log('Did not get found by majority: 1p');
+      }
+    }
+
+    this.localData.addPoints(points);
+    this.server.setPlayerScore(this.localData.getPoints());
   }
 
   navigate() {

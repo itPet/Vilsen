@@ -54,7 +54,11 @@ export class PlaceDetailsPage implements OnInit {
         {
           text: 'Jag är säker',
           handler: () => {
-            this.server.setLostGuessed(true);
+            if (placeName === this.localData.getChosenPlace().name) {
+              this.server.setCorrectPlaceGuess(true);
+            } else {
+              this.server.setCorrectPlaceGuess(false);
+            }
             this.localData.setPlaceGuess(placeName);
           }
         }

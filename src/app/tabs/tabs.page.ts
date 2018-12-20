@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class TabsPage {
 
-  minutes = 10;
+  minutes = 0;
   seconds = 10;
   zeroS: number = null;
   zeroM: number = null;
@@ -27,17 +27,7 @@ export class TabsPage {
 
 
   ionViewWillEnter() {
-    console.log('willEnter tabs');
     this.timer();
-    // this.subscription = this.server.getGame().subscribe(game => {
-    //   console.log('inside getGame()');
-    //   if (game.lostGuessed) {
-    //     this.localData.setLostGuessed(true);
-    //     this.subscriptionTwo.unsubscribe();
-    //     this.storeCorrectUniqueAndLostGuesses();
-    //     this.router.navigateByUrl('/round-finished');
-    //   }
-    // });
 
     this.allP = this.localData.getPlayerNames().length - 1;
 
@@ -55,6 +45,22 @@ export class TabsPage {
         }
         if (player.correctLostGuess) {
           rightGuesses ++;
+        }
+        if (player.role === 'lost' && player.correctPlaceGuess !== null) {
+          this.localData.setLostGuessed(true);
+          let correctGuesses = 0;
+          let correctLost = 0;
+          res.forEach(pl => {
+            if (pl.correctUniqueGuess) {
+              correctGuesses ++;
+            }
+            if (pl.correctLostGuess) {
+              correctLost ++;
+            }
+          });
+          this.localData.setCorrectLostGuesses(correctLost);
+          this.localData.setCorrectUniqueGuesses(correctGuesses);
+          this.router.navigateByUrl('/round-finished');
         }
       });
 
@@ -78,7 +84,6 @@ export class TabsPage {
   }
 
   ionViewWillLeave() {
-    console.log('willLeave tabs page');
     this.subscription.unsubscribe();
   }
 

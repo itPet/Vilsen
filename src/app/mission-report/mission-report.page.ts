@@ -33,7 +33,7 @@ export class MissionReportPage implements OnInit {
     if (this.uniqueGuess === undefined) {
       this.uniqueGuess = 'Inget';
     }
-    let points = 0;
+
     const chosenPlace = this.localData.getChosenPlace();
     const uniqueGuessCorrect = this.localData.getUniqueGuess() === this.localData.getUniquePlayer();
     const uniquePlayerFound = this.localData.getCorrectUniqueGuesses() > 0;
@@ -87,6 +87,7 @@ export class MissionReportPage implements OnInit {
       this.missionOneGuess = this.localData.getPlaceGuess();
       if (this.localData.getPlaceGuess() === undefined) {
         this.missionOneGuess = 'Inget';
+        this.showMissionTwo = true;
       }
       if (placeGuessCorrect) {
         this.missionOneIcon = 'checkmark';
@@ -111,21 +112,6 @@ export class MissionReportPage implements OnInit {
         this.missionTwoPoints = '1 poäng';
       }
     }
-
-    if (uniqueGuessCorrect) {
-      points += 1;
-    }
-    if (lostGuessCorrect) {
-      points += 3;
-    }
-    if (placeGuessCorrect) {
-      points += 3;
-    }
-    if (!this.localData.getLostPlayerFound()) {
-      points += 1;
-    }
-
-    this.localData.addPoints(points);
 
     this.localData.resetData();
   }
