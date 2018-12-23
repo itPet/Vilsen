@@ -4,6 +4,7 @@ import { ServerService } from './../services/server.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PlacesService, PlaceGroup } from '../services/places.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-game',
@@ -17,7 +18,8 @@ export class CreateGamePage implements OnInit {
   constructor(private router: Router,
     private plService: PlacesService,
     private server: ServerService,
-    private localData: LocalDataService) { }
+    private localData: LocalDataService,
+    private platform: Platform) { }
 
   ngOnInit() {
     this.placeGroups = this.plService.getPlaceGroups();

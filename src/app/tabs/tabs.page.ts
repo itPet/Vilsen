@@ -12,13 +12,14 @@ import { Subscription } from 'rxjs';
 })
 export class TabsPage {
 
-  minutes = 8;
-  seconds = 0;
+  minutes = 0;
+  seconds = 20;
   zeroS: number = null;
   zeroM: number = null;
   subscription: Subscription;
   allP: number;
   players: Player[];
+  intervalId;
 
   constructor(public alertCtrl: AlertController,
     private router: Router,
@@ -84,11 +85,13 @@ export class TabsPage {
   }
 
   ionViewWillLeave() {
+    console.log('will leave tabs');
+    clearInterval(this.intervalId);
     this.subscription.unsubscribe();
   }
 
   timer() {
-    const intervalId = setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.seconds -= 1;
       if (this.seconds <= 0 && this.minutes > 0) {
         this.minutes -= 1;
@@ -104,8 +107,9 @@ export class TabsPage {
       } else {
         this.zeroM = null;
       }
-      if (this.minutes <= 0 && this.seconds <= 0) {
-        clearInterval(intervalId);
+      if (this.minutes === 0 && this.seconds === 0) {
+        console.log('time ran out');
+        // clearInterval(this.intervalId); did this in will leave
         this.localData.setTimeRanOut(true);
         this.storeCorrectUniqueAndLostGuesses();
         this.router.navigateByUrl('/round-finished');
