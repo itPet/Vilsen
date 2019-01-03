@@ -5,8 +5,7 @@ export interface Place {
   imgUrl: string;
   uniqueRole: string;
   generalRole: string;
-  bible: string;
-  authors: string;
+  info: string;
 }
 
 export interface PlaceGroup {
@@ -20,94 +19,43 @@ export interface PlaceGroup {
 })
 export class PlacesService {
 
-  private Standard: PlaceGroup = {name: 'Standard', playWithGroup: false, places: [
-    {
-      name : 'Snickar -verkstaden', imgUrl : '../../assets/placesImages/CarpenterShop.jpg',
-      uniqueRole : 'Josef',
-      generalRole: 'en kund', bible : 'Jesus snickarverkstad som han och Josef jobbade i.',
-      authors : ''
-    },
-    {
-      name : 'Genesarets sjö', imgUrl : '../../assets/placesImages/PeterOnWater.jpg',
-      uniqueRole : 'Petrus',
-      generalRole: 'en lärjunge',
-      bible : 'När Petrus gick på vattnet',
-      authors : ''
-    },
-    {
-      name : 'Slätten', imgUrl : '../../assets/placesImages/BoyWithBread.jpg',
-      uniqueRole : 'pojken med 5 bröd och 2 fiskar',
-      generalRole: 'en av folket',
-      bible : 'Slätten där Jesus mättade 5000',
-      authors : ''
-    },
+  private gt: PlaceGroup = {name: 'Platser från GT', playWithGroup: false, places: [
     {
       name : 'Dalen med torra ben', imgUrl : '../../assets/placesImages/DryBones.jpg',
       uniqueRole : 'Hesekiel',
-      generalRole: 'ett skelett', bible : 'Hesekiels syn då han får se torra ben som sedan får kött och liv.',
-      authors : ''
-    },
-    {
-      name : 'Bröllopet i Kanan', imgUrl : '../../assets/placesImages/Wedding.jpg',
-      uniqueRole : 'bruden', generalRole : 'en gäst',
-      bible : 'Bröllopet där Jesus gjorde vatten till vin', authors : ''
-    },
-    {
-      name : 'Dammen i Betesda', imgUrl : '../../assets/placesImages/Bethesda.jpg',
-      uniqueRole : 'den lame som Jesus senare botade',
-      generalRole : 'en av de som tränger sig före',
-      bible : 'Dammen som man trodde att man blev frisk om man hoppade i, men andra trängde sig före den lame',
-      authors : ''
-    },
-    {
-      name : 'Huset med den lame mannen', imgUrl : '../../assets/placesImages/LameHouse.jpg',
-      uniqueRole : 'den lame',
-      generalRole : 'en lärjunge',
-      bible : 'Huset där den lames vänner bröt upp taket och firade ner honom', authors : ''
+      generalRole: 'ett skelett', info : 'Hesekiels syn då han får se torra ben som sedan får kött och liv.',
     },
     {
       name : 'Fiskens mage', imgUrl : '../../assets/placesImages/JonaFish.jpg',
       uniqueRole : 'Jona',
       generalRole : 'en svald fisk',
-      bible : 'När en stor fisk svalde Jona (och säkert andra mindre fiskar)', authors : ''
-    },
-    {
-      name : 'Korset', imgUrl : '../../assets/placesImages/Cross.jpg',
-      uniqueRole : 'rövaren som trodde',
-      generalRole : 'en lärjunge',
-      bible : 'När Jesus blev korsfäst', authors : ''
+      info : 'När en stor fisk svalde Jona (och säkert andra mindre fiskar)',
     },
     {
       name : 'Sinai berg', imgUrl : '../../assets/placesImages/SinaiMount.jpg',
       uniqueRole : 'Mose',
       generalRole : 'en Israelit',
-      bible : 'När Mose fick lagen på berget och folket stod nedanför och väntade', authors : ''
+      info : 'När Mose fick lagen på berget och folket stod nedanför och väntade',
     },
     {
       name : 'Lejongropen', imgUrl : '../../assets/placesImages/DanielLion.jpg',
       uniqueRole : 'Daniel',
-      generalRole: 'ett lejon', bible : 'När Daniel var i lejongropen', authors : ''
+      generalRole: 'ett lejon', info : 'När Daniel var i lejongropen',
     },
     {
       name : 'Röda havet', imgUrl: '../../assets/placesImages/RedSea.jpg',
       uniqueRole : 'Mose', generalRole : 'en Israelit',
-      bible : 'När Gud delade röda havet', authors : ''
-    },
-    {
-      name : 'Stallet i Betlehem', imgUrl : '../../assets/placesImages/SableBethlehem.jpg',
-      uniqueRole : 'Maria',
-      generalRole : 'en Åsna', bible : 'När Jesus föddes', authors : ''
+      info : 'När Gud delade röda havet',
     },
     {
       name : 'Brinnande busken', imgUrl : '../../assets/placesImages/FieryBush.jpg',
       uniqueRole : 'Mose',
-      generalRole: 'ett får', bible : 'När Gud talade ur den brinnande busken när Mose vaktade fåren',
-      authors : ''
+      generalRole: 'ett får', info : 'När Gud talade ur den brinnande busken när Mose vaktade fåren',
     },
     {
       name : 'Brinnande ugnen', imgUrl: '../../assets/placesImages/FieryFurnace.jpg',
       uniqueRole: 'Nebukadnessar', generalRole: 'en av de tre vännerna',
-      bible: `Daniel 3:1-27 - Kung Nebukadnessar lät göra en staty av guld... [Han] kallade samman... alla...
+      info: `Daniel 3:1-27 - Kung Nebukadnessar lät göra en staty av guld... [Han] kallade samman... alla...
       makthavare i provinserna... När ni hör ljudet av.. alla slags instrument, ska ni falla ner och tillbe
       den gyllene statyn... [Nebukadnessar] "Är det sant att ni Shadrak, Meshak och Abed-Nego, inte... tillber
       den gyllene statyn[?]... Om ni inte tillber ska ni i samma stund kastas i den brinnande ugnen, och vilken
@@ -118,13 +66,59 @@ export class PlacesService {
       reste sig hastigt och frågade sina rådsherrar: "Var det inte tre män vi band och kastade i elden?...
       Men nu ser jag fyra män gå lösa och lediga inne i elde, helt oskadda. Och den fjärde ser ut som en gudason."...
       Man kunde inte ens känna att de luktade bränt.`,
-      authors: `PK 509 From his royal seat the king looked on, expecting to see the
-      men who had defied him utterly destroyed. But his feelings of triumph suddenly changed. The nobles standing
-      near saw his face grow pale as he started from the throne and looked intently into the glowing flames. `
     }
   ]};
 
-  private placeGroups: PlaceGroup[] = [this.Standard];
+  private nt: PlaceGroup = {name: 'Platser från NT', playWithGroup: false, places: [
+    {
+      name : 'Snickar -verkstaden', imgUrl : '../../assets/placesImages/CarpenterShop.jpg',
+      uniqueRole : 'Josef',
+      generalRole: 'en kund', info : 'Jesus snickarverkstad som han och Josef jobbade i.',
+    },
+    {
+      name : 'Genesarets sjö', imgUrl : '../../assets/placesImages/PeterOnWater.jpg',
+      uniqueRole : 'Petrus',
+      generalRole: 'en lärjunge',
+      info : 'När Petrus gick på vattnet',
+    },
+    {
+      name : 'Slätten', imgUrl : '../../assets/placesImages/BoyWithBread.jpg',
+      uniqueRole : 'pojken med 5 bröd och 2 fiskar',
+      generalRole: 'en av folket',
+      info : 'Slätten där Jesus mättade 5000',
+    },
+    {
+      name : 'Bröllopet i Kanan', imgUrl : '../../assets/placesImages/Wedding.jpg',
+      uniqueRole : 'bruden', generalRole : 'en gäst',
+      info : 'Bröllopet där Jesus gjorde vatten till vin',
+    },
+    {
+      name : 'Dammen i Betesda', imgUrl : '../../assets/placesImages/Bethesda.jpg',
+      uniqueRole : 'den lame som Jesus senare botade',
+      generalRole : 'en av de som tränger sig före',
+      info : 'Dammen som man trodde att man blev frisk om man hoppade i, men andra trängde sig före den lame',
+    },
+    {
+      name : 'Huset med den lame mannen', imgUrl : '../../assets/placesImages/LameHouse.jpg',
+      uniqueRole : 'den lame',
+      generalRole : 'en lärjunge',
+      info : 'Huset där den lames vänner bröt upp taket och firade ner honom',
+    },
+    {
+      name : 'Korset', imgUrl : '../../assets/placesImages/Cross.jpg',
+      uniqueRole : 'rövaren som trodde',
+      generalRole : 'en lärjunge',
+      info : 'När Jesus blev korsfäst',
+    },
+    {
+      name : 'Stallet i Betlehem', imgUrl : '../../assets/placesImages/SableBethlehem.jpg',
+      uniqueRole : 'Maria',
+      generalRole : 'en Åsna', info : 'När Jesus föddes',
+    },
+
+  ]};
+
+  private placeGroups: PlaceGroup[] = [this.nt, this.gt];
 
   getPlaceGroups() {
       return this.placeGroups;

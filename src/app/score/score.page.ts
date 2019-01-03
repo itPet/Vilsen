@@ -15,6 +15,8 @@ export class ScorePage {
 
   players: Player[];
   lostPlayer: string;
+  isHost = this.localData.isHost();
+  buttonDisabled = true;
 
   subscription: Subscription;
 
@@ -34,6 +36,9 @@ export class ScorePage {
     this.subscription = this.server.getPlayers().subscribe(res => {
       let allReady = true;
       this.players = res;
+      if (res.length > 2) {
+        this.buttonDisabled = false;
+      }
       this.players.forEach(player => {
         if (!player.ready) {
           allReady = false;

@@ -12,8 +12,8 @@ import { Subscription } from 'rxjs';
 })
 export class TabsPage {
 
-  minutes = 0;
-  seconds = 20;
+  minutes = 8;
+  seconds = 0;
   zeroS: number = null;
   zeroM: number = null;
   subscription: Subscription;
@@ -85,7 +85,6 @@ export class TabsPage {
   }
 
   ionViewWillLeave() {
-    console.log('will leave tabs');
     clearInterval(this.intervalId);
     this.subscription.unsubscribe();
   }
@@ -109,7 +108,6 @@ export class TabsPage {
       }
       if (this.minutes === 0 && this.seconds === 0) {
         console.log('time ran out');
-        // clearInterval(this.intervalId); did this in will leave
         this.localData.setTimeRanOut(true);
         this.storeCorrectUniqueAndLostGuesses();
         this.router.navigateByUrl('/round-finished');

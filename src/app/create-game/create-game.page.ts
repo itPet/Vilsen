@@ -4,7 +4,6 @@ import { ServerService } from './../services/server.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PlacesService, PlaceGroup } from '../services/places.service';
-import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-game',
@@ -14,15 +13,26 @@ import { Platform } from '@ionic/angular';
 export class CreateGamePage implements OnInit {
 
   placeGroups: PlaceGroup[];
+  buttonDisabled: true;
 
   constructor(private router: Router,
     private plService: PlacesService,
     private server: ServerService,
-    private localData: LocalDataService,
-    private platform: Platform) { }
+    private localData: LocalDataService) { }
 
   ngOnInit() {
     this.placeGroups = this.plService.getPlaceGroups();
+    this.enableButton();
+  }
+
+  enableButton() {
+    let disabled = true;
+    this.placeGroups.forEach(group => {
+      if (group.playWithGroup) {
+        disabled = false;
+      }
+    });
+    this.buttonDisabled = disabled;
   }
 
   continueBtnClicked() {

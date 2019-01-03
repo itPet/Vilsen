@@ -1,31 +1,64 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Vilsen</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding >
-  <h1 *ngIf="storedName">
-    Välkommen {{playerName}}
-    <ion-button (click)="changeName()" slot="end">Byt namn</ion-button>
-  </h1>
-  <div *ngIf="!storedName">
-    <ion-item>
-      <ion-label position="floating">Ditt namn</ion-label>
-      <ion-input autofocus="true" (ionChange)="nameTyped($event)" [(ngModel)]="playerName"></ion-input>
-    </ion-item>
-    <br>
-    <br>
-    <ion-button expand="block"
-    type="submit"
-    [disabled]="buttonDisabled"
-    (click)="storePlayerName()">Fortsätt</ion-button>
-  </div>
+<ion-content padding>
+  <ion-card *ngIf="storedName">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-item>
+          Välkommen {{playerName}}
+          <ion-button (click)="changeName()" slot="end">Byt namn</ion-button>
+        </ion-item>
+        <br>
+      </ion-card-title>
+    </ion-card-header>
 
-  <ion-button *ngIf="storedName" expand="block" (click)="createGame()">Skapa spel</ion-button>
-  <br>
-  <br>
-  <br>
-  <ion-button *ngIf="storedName" expand="block" (click)="joinGame()">Gå med i spel</ion-button>
+    <ion-card-content>
+      <ion-button *ngIf="storedName" expand="block" (click)="createGame()">Skapa spel</ion-button>
+      <br>
+      <br>
+      <br>
+      <ion-button *ngIf="storedName" expand="block" (click)="joinGame()">Gå med i spel</ion-button>
+    </ion-card-content>
+  </ion-card>
 
+  <ion-card *ngIf="!storedName">
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Skriv ditt namn</ion-label>
+        <ion-input autofocus="true" (ionChange)="nameTyped($event)" [(ngModel)]="playerName"></ion-input>
+      </ion-item>
+      <br>
+      <br>
+      <ion-button expand="block"
+      type="submit"
+      [disabled]="buttonDisabled"
+      (click)="storePlayerName()">Fortsätt</ion-button>
+      <br>
+      <br>
+      <h3><b>Spelregler</b></h3>
+      <p>
+        "Vilsen" är ett socialt diskussionsspel för 3-10 spelare. För att spela spelet behöver samtliga deltagare befinna sig 
+        i samma rum. När spelet startas tilldelas alla en roll och en plats (utom den vilsne som bara får en roll). Alla
+        tilldelas samma plats. Spelet går ut på att 
+        samla så mycket poäng som möjligt. Poäng får man om man klarar ett uppdrag. Uppdragen hittas under fliken "Uppdrag" 
+        när spelet är igång.
+      </p>
+      <br>
+      <p>
+        Spelet börjar med att den yngste spelaren ställer en fråga till vem som helst av de andra deltagarna. 
+        Frågan ska handla
+        om personens upplevelse av platsen den är på t.ex "Är det varmt där du är?", "Varför har du kommit hit?" eller
+        "Hur mår du på den här platsen?". Personen som fick frågan ska nu svara enligt rollen som hen blev tilldelad.
+        Sedan är det den som fick frågans tur att ställa en fråga till någon annan spelare. Samma regler tillämpas.
+        Syftet med att ställa frågor och svara på frågor är att det ger en ledtrådar om vilka roller de andra deltagarna
+        har. Många av uppdragen handlar om att gissa vem som har vilken roll. Spelet fortsätter på detta sätt enda tills
+        tiden går ut, eller den som är vilsen gissar på en plats eller tills fler än majoriteten har hittat den vilsne.
+      </p>
+
+    </ion-card-content>
+  </ion-card>
 </ion-content>

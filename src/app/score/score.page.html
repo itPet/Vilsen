@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>score</ion-title>
+    <ion-title>Poäng</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -27,7 +27,7 @@
     </ion-item>
     
   </ion-list>
-  <ion-button (click)="readyToPlay()">
-    Ready to play
+  <ion-button [disabled]="buttonDisabled" (click)="readyToPlay()" expand="block">
+    Redo att spela
   </ion-button>
 </ion-content>
