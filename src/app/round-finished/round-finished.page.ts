@@ -69,9 +69,16 @@ export class RoundFinishedPage implements OnInit {
       }
     }
     if (this.localData.getPlayerRole() === 'lost') {
+      console.log('Player role: lost');
       if (this.localData.getPlaceGuess() === this.localData.getChosenPlace().name) {
         points += 3;
         console.log('Found place: 3p');
+        if (!this.localData.getLostPlayerFound()) {
+          points += 1;
+          console.log('Did not get found by majority: 1p');
+        }
+      }
+      if (this.localData.getPlaceGuess() === undefined) {
         if (!this.localData.getLostPlayerFound()) {
           points += 1;
           console.log('Did not get found by majority: 1p');

@@ -19,6 +19,7 @@ export class TabsPage {
   subscription: Subscription;
   allP: number;
   players: Player[];
+  rightGuesses: number;
   intervalId;
 
   constructor(public alertCtrl: AlertController,
@@ -33,7 +34,7 @@ export class TabsPage {
     this.allP = this.localData.getPlayerNames().length - 1;
 
     this.subscription = this.server.getPlayers().subscribe(res => {
-      let rightGuesses = 0;
+      this.rightGuesses = 0;
       let allHaveGuessed = true;
       this.players = res;
 
@@ -45,10 +46,11 @@ export class TabsPage {
           allHaveGuessed = false;
         }
         if (player.correctLostGuess) {
-          rightGuesses ++;
+          this.rightGuesses ++;
         }
         if (player.role === 'lost' && player.correctPlaceGuess !== null) {
           this.localData.setLostGuessed(true);
+          this.localData.setLostPlayerFound(false);
           let correctGuesses = 0;
           let correctLost = 0;
           res.forEach(pl => {
@@ -65,7 +67,7 @@ export class TabsPage {
         }
       });
 
-      if (allHaveGuessed && (rightGuesses / this.allP) > 0.5) {
+      if (allHaveGuessed && (this.rightGuesses / this.allP) > 0.5) {
         this.localData.setLostPlayerFound(true);
         let correctGuesses = 0;
         let correctLost = 0;
@@ -126,6 +128,12 @@ export class TabsPage {
         correctLost ++;
       }
     });
+
+    if ((this.rightGuesses / this.allP) > 0.5 ) {
+      this.localData.setLostPlayerFound(true);
+    } else {
+      this.localData.setLostPlayerFound(false);
+    }
 
     this.localData.setCorrectLostGuesses(correctLost);
     this.localData.setCorrectUniqueGuesses(correctGuesses);
