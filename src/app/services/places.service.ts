@@ -115,10 +115,43 @@ export class PlacesService {
       uniqueRole : 'Maria',
       generalRole : 'en Åsna', info : 'När Jesus föddes',
     },
-
   ]};
 
-  private placeGroups: PlaceGroup[] = [this.nt, this.gt];
+  private demo: PlaceGroup = {name: 'Demo platser', playWithGroup: false, places: [
+    {
+      name : 'Demo1', imgUrl : '../../assets/placesImages/demo1.jpg',
+      uniqueRole : 'En fotograf',
+      generalRole: 'en turist', info : 'Här är lite info om demo platsen. Demo demo demo demo...',
+    },
+    {
+      name : 'Demo2', imgUrl : '../../assets/placesImages/demo2.jpg',
+      uniqueRole : 'En fotograf',
+      generalRole: 'en turist', info : 'Här är lite info om demo platsen. Demo demo demo demo...',
+    },
+    {
+      name : 'Demo3', imgUrl : '../../assets/placesImages/demo3.jpg',
+      uniqueRole : 'En fotograf',
+      generalRole: 'en turist', info : 'Här är lite info om demo platsen. Demo demo demo demo...',
+    },
+    {
+      name : 'Demo4', imgUrl : '../../assets/placesImages/demo4.jpg',
+      uniqueRole : 'En fotograf',
+      generalRole: 'en turist', info : 'Här är lite info om demo platsen. Demo demo demo demo...',
+    },
+    {
+      name : 'Demo5', imgUrl : '../../assets/placesImages/demo5.jpg',
+      uniqueRole : 'En fotograf',
+      generalRole: 'en turist', info : 'Här är lite info om demo platsen. Demo demo demo demo...',
+    },
+    {
+      name : 'Demo6', imgUrl : '../../assets/placesImages/demo6.jpg',
+      uniqueRole : 'En fotograf',
+      generalRole: 'en turist', info : 'Här är lite info om demo platsen. Demo demo demo demo...',
+    },
+  ]};
+
+
+  private placeGroups: PlaceGroup[] = [this.demo, this.nt, this.gt];
 
   getPlaceGroups() {
       return this.placeGroups;
